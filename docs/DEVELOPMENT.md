@@ -155,22 +155,24 @@ switched away and back.
 
 Stated precisely, because at 0.1.0 it is uneven.
 
-**Verified without running anything:** the API surface. Every call used here
-appears either in a working sibling macro in this folder
-(`GetRenderMaterials2`, `RemoveAllEntities`, `GetEntities`, `EditRebuild3`,
-`EnableGraphicsUpdate`) or in CodeStack's published examples
-(`RemoveMaterialProperty`, `RemoveMaterialProperty2`, `GetBodies2`, `GetFaces`,
-`GetFeatures`, `GetComponents(False)`, `ResolveAllLightWeightComponents`,
-`GetModelDoc2`, `GetPathName`, `SetSaveFlag`, `GetSuppression`).
+**Confirmed working in SOLIDWORKS** on a large multi-level assembly, one with
+suppressed components and many repeated parts.
 
-**Assumed, and the most likely thing to need a fix:** `SetSuppression2` with
-`swComponentSuppressionState_e.swComponentResolved`. It is used here from the
-documented API rather than from a working example in either source, which is why
-the code re-reads `GetSuppression()` afterwards instead of trusting it.
+That run exercises the whole assembly path end to end: the component walk, the
+per-document de-duplication, the appearance sweeps, `SetSaveFlag`, and
+`SetSuppression2` — the one call taken from the documented API rather than from a
+working example, and which the resolved components confirm.
 
-**Not yet confirmed in SOLIDWORKS:** everything else. Nothing that touches the
-SOLIDWORKS API can be verified any other way, and this section will say so until
-it has been run.
+**Not yet exercised**, and worth knowing before relying on them:
+
+- **The part-only path.** Running it on a lone part rather than an assembly.
+- **Multiple configurations.** `swAllConfiguration` is the mechanism for the
+  configuration axis, and the test assembly's configuration count is not recorded.
+- **Read-only and PDM-controlled parts.** The macro modifies them in memory
+  regardless; what it does not do is warn that saving will fail.
+- **Performance.** `SHOW_DIAGNOSTICS` was off for the confirming run, so the
+  timing breakdown was not captured and the cost of the per-face sweep is
+  unmeasured. Turn it on before tuning `NUKE_FACES_INDIVIDUALLY`.
 
 ## There is no build step
 
