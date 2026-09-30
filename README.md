@@ -6,7 +6,7 @@ state, every configuration, and every part inside an assembly.
 **Tested on SOLIDWORKS 2022, 2024 and 2025.** Other versions are likely to
 work; they are simply untested.
 
-> **Want all eleven macros at once?** This one is part of the [MacroShelf
+> **Want the whole set at once?** This one is part of the [MacroShelf
 > Collection](https://github.com/james-debono/macroshelf-collection-sw-macro-library) — a single
 > download, already arranged as a library for the [MacroShelf](https://github.com/james-debono/macroshelf-sw-addin)
 > add-in, so every macro lands on a SOLIDWORKS toolbar tab with its icon and
